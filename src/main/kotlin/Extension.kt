@@ -235,6 +235,7 @@ enum class KeyMintTag(val value: Int) {
   PADDING(6),
   EC_CURVE(10),
   RSA_PUBLIC_EXPONENT(200),
+  MGF_DIGEST(203),
   ACTIVE_DATE_TIME(400),
   ORIGINATION_EXPIRE_DATE_TIME(401),
   USAGE_EXPIRE_DATE_TIME(402),
@@ -286,6 +287,9 @@ data class AuthorizationList(
   @SuppressWarnings("Immutable") val paddings: Set<BigInteger>? = null,
   val ecCurve: BigInteger? = null,
   val rsaPublicExponent: BigInteger? = null,
+  // START contribution by OneTeam Services Group Pty Limited
+  @SuppressWarnings("Immutable") val mgfDigest: Set<BigInteger>? = null,
+  // END contribution by OneTeam Services Group Pty Limited
   val activeDateTime: BigInteger? = null,
   val originationExpireDateTime: BigInteger? = null,
   val usageExpireDateTime: BigInteger? = null,
@@ -328,6 +332,7 @@ data class AuthorizationList(
         paddings?.toAsn1()?.let { add(it.toTaggedObject(KeyMintTag.PADDING)) }
         ecCurve?.toAsn1()?.let { add(it.toTaggedObject(KeyMintTag.EC_CURVE)) }
         rsaPublicExponent?.toAsn1()?.let { add(it.toTaggedObject(KeyMintTag.RSA_PUBLIC_EXPONENT)) }
+        mgfDigest?.toAsn1()?.let { add(it.toTaggedObject(KeyMintTag.MGF_DIGEST)) }
         activeDateTime?.toAsn1()?.let { add(it.toTaggedObject(KeyMintTag.ACTIVE_DATE_TIME)) }
         originationExpireDateTime?.toAsn1()?.let {
           add(it.toTaggedObject(KeyMintTag.ORIGINATION_EXPIRE_DATE_TIME))
@@ -424,6 +429,7 @@ data class AuthorizationList(
         paddings = objects[KeyMintTag.PADDING]?.toSet<ASN1Integer>()?.map { it.value }?.toSet(),
         ecCurve = objects[KeyMintTag.EC_CURVE]?.toInt(),
         rsaPublicExponent = objects[KeyMintTag.RSA_PUBLIC_EXPONENT]?.toInt(),
+        mgfDigest = objects[KeyMintTag.MGF_DIGEST]?.toSet<ASN1Integer>()?.map { it.value }?.toSet(),
         activeDateTime = objects[KeyMintTag.ACTIVE_DATE_TIME]?.toInt(),
         originationExpireDateTime = objects[KeyMintTag.ORIGINATION_EXPIRE_DATE_TIME]?.toInt(),
         usageExpireDateTime = objects[KeyMintTag.USAGE_EXPIRE_DATE_TIME]?.toInt(),
