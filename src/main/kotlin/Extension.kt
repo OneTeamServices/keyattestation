@@ -287,9 +287,7 @@ data class AuthorizationList(
   @SuppressWarnings("Immutable") val paddings: Set<BigInteger>? = null,
   val ecCurve: BigInteger? = null,
   val rsaPublicExponent: BigInteger? = null,
-  // START contribution by OneTeam Services Group Pty Limited
   @SuppressWarnings("Immutable") val mgfDigest: Set<BigInteger>? = null,
-  // END contribution by OneTeam Services Group Pty Limited
   val activeDateTime: BigInteger? = null,
   val originationExpireDateTime: BigInteger? = null,
   val usageExpireDateTime: BigInteger? = null,
