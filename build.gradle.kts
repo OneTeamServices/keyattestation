@@ -18,7 +18,10 @@ plugins {
   id("com.adarshr.test-logger") version "4.0.0"
   id("com.google.devtools.ksp") version ("2.2.0-2.0.2")
   id("org.jetbrains.kotlin.jvm") version "2.2.0"
+  `maven-publish`
 }
+
+group = "services.oneteam.onelink"
 
 repositories { mavenCentral() }
 
@@ -100,3 +103,20 @@ tasks.named("compileKotlin").configure {
     dependsOn("generateSources")
 }
 
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/oneteamservices/keyattestation")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("PACKAGE_REGISTRY_USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("PACKAGE_REGISTRY_TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
+}
